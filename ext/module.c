@@ -84,12 +84,14 @@ char* phpgo_module_load(phpgo_module **module_pp, const char *path, const char *
 	size_t i;
 	phpgo_module *module;
 
-	module = find_cached_module(path, name TSRMLS_CC);
+  
+	/*module = find_cached_module(path, name TSRMLS_CC);
 	if (module != NULL) {
 		*module_pp = module;
 		return NULL;
 	}
-
+  */
+  
 	handle = dlopen(path, RTLD_NOW);
 	if (!handle) {
 		return estrdup(dlerror());
@@ -130,7 +132,7 @@ char* phpgo_module_load(phpgo_module **module_pp, const char *path, const char *
 		zend_hash_str_add_ptr(&module->exports, e->name, strlen(e->name), e);
 	}
 
-	cache_module(path, name, module TSRMLS_CC);
+	//cache_module(path, name, module TSRMLS_CC);
 
 	*module_pp = module;
 

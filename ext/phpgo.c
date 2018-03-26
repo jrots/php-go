@@ -30,6 +30,8 @@
 ZEND_DECLARE_MODULE_GLOBALS(phpgo)
 
 int le_phpgo;
+phpgo_module *module;
+
 
 /* {{{ phpgo_functions[]
  */
@@ -128,8 +130,12 @@ PHP_FUNCTION(phpgo_load)
 	char *name;
 	size_t name_len;
 
-	phpgo_module *module;
 	char *err;
+  
+	if (module != NULL) {
+    phpgo_module_new_instance(return_value, module TSRMLS_CC);
+		return;
+	}
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "ps", &path, &path_len, &name, &name_len) == FAILURE) {
 		return;
